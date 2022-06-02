@@ -1,5 +1,5 @@
-# tipit.jackace.com
-TipiT: The Palindromic Tip Calculator - Web Edition
+# gto-baccarat.jackace.com
+Game Theory Optimal Baccarat - Web Edition
 
 ## Requirements
 

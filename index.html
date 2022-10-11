@@ -1,11 +1,21 @@
 ---
 title: Game Theory Optimal Baccarat - JackAce.com
 ---
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
     <head>
         <title>GTO Baccarat by JackAce</title>
         <link rel="stylesheet" href="/assets/css/main.css" />
+        {%- if site.google_analytics -%}
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{-site.google_analytics-}}"></script>
+            <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '{{-site.google_analytics-}}');
+            </script>
+        {%- endif -%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
         <script src="/assets/js/gto-baccarat.js"></script>

@@ -1,18 +1,146 @@
+let cardHistory = [];
 
 $(document).ready(function() {
     updateUi();
-  
+
       // Use the keys to decrement cards
-    $(document).keypress(function(e) {
+    $(document).keydown(function(e) {
       if (document.activeElement.id === "") {
-          // No element has focus
+        // No element has focus
         if (e.which >= 48 && e.which <= 57) {
-            decrement(e.which - 48);
+          let cardIndex = e.which - 48;
+          decrement(cardIndex);
+        }
+        else if (e.which === 8) {
+          // User pressed backspace
+          let cardHistoryLength = cardHistory.length;
+          if (cardHistoryLength > 0) {
+            let cardIndex = cardHistory[cardHistoryLength - 1];
+            increment(cardIndex);
+          }
         }
       }
     });
   
   });
+
+  function updateChart() {
+
+    let remainingCardArray = [];
+    let backgroundColorArray = [];
+    for (let i = 0; i < 10; i++) {
+      let cardCount = parseInt($("#cards" + i).val());
+  
+      remainingCardArray.push(cardCount);
+      if (cardCount > 2) {
+        backgroundColorArray.push('rgba(54, 162, 235, 0.5)');
+      }
+      else {
+        backgroundColorArray.push('rgba(255, 0, 0, 0.8)');
+      }
+    }
+
+    let cardChart = document.getElementById("cardChart");
+    if (cardChart) {
+      cardChart.remove();
+    }
+    let canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'cardChart');
+    canvas.setAttribute('width', '800');
+    canvas.setAttribute('min-width', '800');
+    canvas.setAttribute('max-width', '800');
+    canvas.setAttribute('height', '200');
+    canvas.setAttribute('min-height', '200');
+    canvas.setAttribute('max-height', '200');
+    document.querySelector('#canvasContainer').appendChild(canvas);
+
+    const ctx = $('#cardChart');
+
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['10s', 'Aces', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s'],
+          datasets: [{
+              label: 'Remaining Cards',
+              data: remainingCardArray,
+              backgroundColor: backgroundColorArray,
+              borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(54, 162, 235, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          animation: {
+            duration: 0
+          }
+      }
+    });    
+  }
+
+  function updateLastCards() {
+    const maxCardsToShow = 4;
+    let cardLength = cardHistory.length;
+    let firstCardIndex = cardLength - maxCardsToShow;
+    firstCardIndex = (firstCardIndex < 0) ? 0 : firstCardIndex;
+
+    $('#lastCardsDiv').html('');
+    for (let i = firstCardIndex; i < cardLength; i++) {
+      let card = cardHistory[i]
+      let cardRank = card + '';
+      if (card === 0) {
+        cardRank = 'J';
+      }
+      else if (card === 1) {
+        cardRank = 'A';
+      }
+
+      if (i === cardLength - 1) {
+        $('#lastCardsDiv').prepend('<img id="img0" src="/assets/img/cards/' + cardRank + 'h-250x350.png" height="90" /><br/>');
+      }
+      else {
+        $('#lastCardsDiv').prepend('<img id="img0" src="/assets/img/cards/' + cardRank + 'h-250x350.png" height="50" /><br/>');
+      }
+    }
+  }
+
+  function updateBestWager(result) {
+    let evArray = [result.bankerWinEv, result.playerWinEv, result.tieEv];
+    evArray.sort((a, b) => {
+      if (a < b) {
+        return 1;
+      }
+      if (a > b) {
+        return -1;
+      }
+      return 0;
+    });
+
+    if (evArray[0] == result.bankerWinEv) {
+      $("#bestWagerDiv").text("BANKER");
+    }
+    else if (evArray[0] == result.playerWinEv) {
+      $("#bestWagerDiv").text("PLAYER");
+    }
+    else {
+      $("#bestWagerDiv").text("TIE");
+    }
+
+  }
   
   function performCalculation() {
     var result = getStatistics();
@@ -32,6 +160,10 @@ $(document).ready(function() {
     setEvClass("#bankerWinEvDiv");
     setEvClass("#playerWinEvDiv");
     setEvClass("#tieEvDiv");
+
+    updateChart();
+    updateLastCards();
+    updateBestWager(result);
   }
   
   function setEvClass(elementId) {
@@ -61,29 +193,14 @@ $(document).ready(function() {
   }
   
   function updateUi() {
-    for (var i = 0; i < 10; i++) {
-      setBarProperties(i);
-    }
-    
     performCalculation();
-  }
-  
-  function setBarProperties(index) {
-    var cardCount = parseInt($("#cards" + index).val());
-  
-    $("#barGraph" + index).height(cardCount + 1);
-  
-    if (cardCount > 0) {
-      $("#barGraph" + index).attr("class", "bar");
-    } else {
-      $("#barGraph" + index).attr("class", "barEmpty");
-    }
   }
   
   function decrement(index) {
     var currentValue = parseInt($("#cards" + index).val());
     if (currentValue > 0) {
       $("#cards" + index).val(--currentValue);
+      cardHistory.push(index);
     }
     else {
       $("#cards" + index).val(0);
@@ -94,6 +211,7 @@ $(document).ready(function() {
   function increment(index) {
     var currentValue = parseInt($("#cards" + index).val());
     $("#cards" + index).val(++currentValue);
+    cardHistory.pop();
     updateUi();
   }
   
@@ -102,6 +220,7 @@ $(document).ready(function() {
     for (var i = 1; i < 10; i++) {
         $("#cards" + i).val(4 * decks)
     }
+    cardHistory = [];
     updateUi();
   }
   

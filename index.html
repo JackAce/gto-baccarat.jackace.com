@@ -1,17 +1,18 @@
+---
+title: Game Theory Optimal Baccarat - JackAce.com
+---
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
     <head>
         <title>GTO Baccarat by JackAce</title>
         <link rel="stylesheet" href="/assets/css/main.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
         <script src="/assets/js/gto-baccarat.js"></script>
     </head>
     <body>
 
         <div>
-            <h3>
-              Baccarat Solver
-            </h3>
             <table>
               <tr>
                 <th>
@@ -46,41 +47,32 @@
           
             <table>
               <tr>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph0" width="45" class="bar" height="129"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph1" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph2" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph3" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph4" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph5" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph6" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph7" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph8" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" id="barGraph9" width="45" class="bar" height="33"/>
-                </th>
-                <th class="barGraph">
-                  <img src="/assets/img/1x1.gif" width="1" height="150"/>
-                </th>
+                <td colspan="11">
+                  <div id="canvasContainer" style="width: 800px;min-width: 800px;max-width: 800px;height: 200px;min-height: 200px;max-height: 200px;">
+                    <canvas id="cardChart" class="cardChart" style="width: 800px;min-width: 800px;max-width: 800px;height: 200px;min-height: 200px;max-height: 200px;"></canvas>
+                  </div>
+                </td>
+                <td rowspan="3" style="width: 200px;min-width: 200px;max-width: 200px;">
+                  
+                  <table style="height: 250px;min-height: 250px;max-height: 250px;width: 200px;min-width: 200px;max-width: 200px;">
+                    <tr>
+                      <th>
+                        Last Cards
+                      </th>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center;">
+                        <div id="lastCardsDiv" style="height: 250px;min-height: 250px;max-height: 250px;width: 200px;min-width: 200px;max-width: 200px;"><img src="{{site.baseurl}}/assets/img/1x1.png" height="250" width="200" /></div>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
               </tr>
               <tr>
+                <td style="width: 30px;">
+                  &nbsp;
+                </td>
                 <th>
                   <input
                     type="text"
@@ -182,7 +174,11 @@
                     />
                 </th>
               </tr>
+              <!--
               <tr>
+                <td>
+                  &nbsp;
+                </td>
                 <th>
                   <img src="/assets/img/action/card-plus.svg" onclick="increment(0);" />
                   <img src="/assets/img/action/card-minus.svg" onclick="decrement(0);" />
@@ -224,44 +220,49 @@
                   <img src="/assets/img/action/card-minus.svg" onclick="decrement(9);" />
                 </th>
               </tr>
+              -->
               <tr>
+                <td>
+                  &nbsp;
+                </td>
                 <th>
-                  <img src="/assets/img/cards/Js-250x350.png" width="45" />
+                  <img src="/assets/img/cards/Js-250x350.png" width="45" onclick="decrement(0);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/As-Ornate-250x350.png" width="45" />
+                  <img src="/assets/img/cards/As-Ornate-250x350.png" width="45" onclick="decrement(1);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/2s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/2s-250x350.png" width="45" onclick="decrement(2);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/3s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/3s-250x350.png" width="45" onclick="decrement(3);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/4s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/4s-250x350.png" width="45" onclick="decrement(4);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/5s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/5s-250x350.png" width="45" onclick="decrement(5);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/6s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/6s-250x350.png" width="45" onclick="decrement(6);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/7s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/7s-250x350.png" width="45" onclick="decrement(7);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/8s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/8s-250x350.png" width="45" onclick="decrement(8);" />
                 </th>
                 <th>
-                  <img src="/assets/img/cards/9s-250x350.png" width="45" />
+                  <img src="/assets/img/cards/9s-250x350.png" width="45" onclick="decrement(9);" />
                 </th>
               </tr>
             </table>
             <br/>
             <br/>
-            <table class="statsTable" width="100%" align="center">
+
+            <table class="statsTable" style="width: 800px;min-width: 800px;max-width: 800px;">
               <tr>
-                <td>
+                <td class="statsTitle">
                   &nbsp;
                 </td>
                 <th class="statsTitle">
@@ -314,6 +315,21 @@
                 </td>
                 <td class="stats">
                   <div id="tieEvDiv"/>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  &nbsp;
+                </td>
+              </tr>
+              <tr>
+                <th colspan="4" class="statsTitle">
+                  Best Wager
+                </td>
+              </tr>
+              <tr>
+                <th colspan="4" class="bestWager">
+                  <div id="bestWagerDiv"></div>
                 </td>
               </tr>
             </table>

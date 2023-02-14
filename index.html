@@ -5,7 +5,7 @@ title: Game Theory Optimal Baccarat - JackAce.com
     <head>
         <title>GTO Baccarat by JackAce</title>
         <link rel="stylesheet" href="/assets/css/main.css" />
-        {%- if site.google_analytics -%}
+        {%- if jekyll.environment == 'production' and site.google_analytics -%}
             <!-- Global site tag (gtag.js) - Google Analytics -->
             <script async src="https://www.googletagmanager.com/gtag/js?id={{-site.google_analytics-}}"></script>
             <script>
@@ -15,6 +15,9 @@ title: Game Theory Optimal Baccarat - JackAce.com
 
             gtag('config', '{{-site.google_analytics-}}');
             </script>
+        {%- endif -%}
+        {%- if jekyll.environment == 'production' and site.google_adsense -%}
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.google_adsense }}" crossorigin="anonymous"></script>
         {%- endif -%}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>

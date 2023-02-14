@@ -1,4 +1,7 @@
 let cardHistory = [];
+const IMG_SRC_BANKER = "/assets/img/results/baccarat-banker-400x225.png";
+const IMG_SRC_PLAYER = "/assets/img/results/baccarat-player-400x225.png";
+const IMG_SRC_TIE = "/assets/img/results/baccarat-tie-400x225.png";
 
 $(document).ready(function() {
     updateUi();
@@ -131,13 +134,16 @@ $(document).ready(function() {
     });
 
     if (evArray[0] == result.bankerWinEv) {
-      $("#bestWagerDiv").text("BANKER");
+      //$("#bestWagerDiv").text("BANKER");
+      $("#bestWagerImg").attr('src', IMG_SRC_BANKER);
     }
     else if (evArray[0] == result.playerWinEv) {
-      $("#bestWagerDiv").text("PLAYER");
+      //$("#bestWagerDiv").text("PLAYER");
+      $("#bestWagerImg").attr('src', IMG_SRC_PLAYER);
     }
     else {
-      $("#bestWagerDiv").text("TIE");
+      //$("#bestWagerDiv").text("TIE");
+      $("#bestWagerImg").attr('src', IMG_SRC_TIE);
     }
 
   }

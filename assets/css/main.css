@@ -19,9 +19,10 @@ html {
   }
 
   .cardTextBox {
-    width: 25px;
+    width: 45px;
   }
   .statsTitle {
+    text-align: center;
     font-weight: bold;
     background-color: #ccc;
   }
